@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foldr — Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EEF1F5;
+    --paper-2: #FFFFFF;
+    --ink: #12162A;
+    --ink-soft: #5B6178;
+    --ink-faint: #9BA0B4;
+    --signal: #FF5630;
+    --peri: #6C6FF0;
+    --peri-soft: #EDEEFF;
+    --border: rgba(18, 22, 42, 0.09);
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--font-body); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  a { color: var(--signal); }
+  code { font-family: var(--font-mono); background: var(--peri-soft); color: var(--peri); padding: 2px 7px; border-radius: 4px; font-size: 0.9em; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em; }
+
+  .layout { display: grid; grid-template-columns: 260px 1fr; max-width: 1120px; margin: 0 auto; min-height: 100vh; }
+
+  aside { padding: 48px 28px; border-right: 1px solid var(--border); position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+  .doc-logo { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 700; font-size: 19px; margin-bottom: 6px; }
+  .logo-mark { width: 24px; height: 24px; background: var(--ink); border-radius: 6px; flex-shrink: 0; }
+  .doc-sub { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; margin-bottom: 40px; display: block; }
+
+  nav ul { list-style: none; }
+  nav li { margin-bottom: 4px; }
+  nav a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--ink-soft); font-size: 14px; text-decoration: none; }
+  nav a:hover { background: var(--paper-2); color: var(--ink); }
+
+  main { padding: 56px 56px 100px; max-width: 760px; }
+  section { margin-bottom: 64px; scroll-margin-top: 30px; }
+  h1 { font-size: 34px; margin-bottom: 12px; }
+  h2 { font-size: 24px; margin-bottom: 18px; padding-top: 6px; }
+  h3 { font-size: 17px; margin: 24px 0 10px; }
+  p { color: var(--ink-soft); margin-bottom: 14px; font-size: 15px; }
+  ul, ol { margin: 0 0 16px 20px; color: var(--ink-soft); font-size: 15px; }
+  li { margin-bottom: 6px; }
+
+  .lead { font-size: 17px; color: var(--ink-soft); max-width: 560px; }
+
+  .card { background: var(--paper-2); border: 1px solid var(--border); border-radius: 12px; padding: 24px 26px; margin: 18px 0; }
+
+  .file-tree { font-family: var(--font-mono); font-size: 13.5px; background: var(--paper-2); border: 1px solid var(--border); border-radius: 10px; padding: 22px 26px; color: var(--ink-soft); line-height: 1.9; }
+  .file-tree .f { color: var(--ink); }
+  .file-tree .c { color: var(--peri); }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  th { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); }
+  td code { font-size: 12.5px; }
+
+  .badge { display: inline-block; font-family: var(--font-mono); font-size: 11px; background: var(--peri-soft); color: var(--peri); padding: 3px 9px; border-radius: 20px; margin-bottom: 12px; }
+
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+    aside { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+    main { padding: 40px 24px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <aside>
+    <div class="doc-logo"><span class="logo-mark"></span>Foldr</div>
+    <span class="doc-sub">TEMPLATE DOCUMENTATION</span>
+    <nav>
+      <ul>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#files">File structure</a></li>
+        <li><a href="#start">Getting started</a></li>
+        <li><a href="#colors">Customizing colors</a></li>
+        <li><a href="#fonts">Customizing fonts</a></li>
+        <li><a href="#content">Editing content</a></li>
+        <li><a href="#sections">Sections overview</a></li>
+        <li><a href="#credits">Credits</a></li>
+        <li><a href="#changelog">Changelog</a></li>
+        <li><a href="#support">Support</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main>
+    <section id="intro">
+      <span class="badge">v1.0</span>
+      <h1>Foldr Documentation</h1>
+      <p class="lead">Thanks for picking up Foldr — a landing page template for AI and SaaS products, built with plain HTML, CSS and JavaScript. No build tools, no frameworks, no dependencies to install.</p>
+    </section>
+
+    <section id="files">
+      <h2>File structure</h2>
+      <p>Everything you need is in the root folder — unzip and you're ready to edit.</p>
+      <div class="file-tree">
+        <span class="f">foldr-template/</span><br>
+        &nbsp;&nbsp;├── index.html <span class="c">— Home 1 (light)</span><br>
+        &nbsp;&nbsp;├── home-dark.html <span class="c">— Home 2 (dark)</span><br>
+        &nbsp;&nbsp;└── documentation.html <span class="c">— this file</span>
+      </div>
+    </section>
+
+    <section id="start">
+      <h2>Getting started</h2>
+      <ol>
+        <li>Unzip the downloaded package anywhere on your computer.</li>
+        <li>Open <code>index.html</code> directly in any browser to preview Home 1.</li>
+        <li>Edit the HTML in any text editor (VS Code, Sublime, even Notepad) and refresh the browser to see changes — no compiling or build step required.</li>
+        <li>When you're ready to publish, upload the files to any static host: Netlify, Vercel, GitHub Pages, or standard cPanel hosting all work.</li>
+      </ol>
+    </section>
+
+    <section id="colors">
+      <h2>Customizing colors</h2>
+      <p>All colors are defined once, at the top of the <code>&lt;style&gt;</code> block, as CSS variables. Change a value here and it updates everywhere in the page automatically.</p>
+      <div class="card">
+        <code>--paper</code> — page background<br>
+        <code>--ink</code> — main text / headline color<br>
+        <code>--signal</code> — primary accent (buttons, highlights)<br>
+        <code>--peri</code> — secondary accent (icons, small details)
+      </div>
+      <p>To retheme the template for a different product, changing these four variables is usually enough.</p>
+    </section>
+
+    <section id="fonts">
+      <h2>Customizing fonts</h2>
+      <p>Foldr uses three Google Fonts, loaded in the <code>&lt;head&gt;</code>:</p>
+      <table>
+        <tr><th>Role</th><th>Font</th><th>Used for</th></tr>
+        <tr><td>Display</td><td><code>Space Grotesk</code></td><td>Headlines</td></tr>
+        <tr><td>Body</td><td><code>Inter</code></td><td>Paragraphs, buttons</td></tr>
+        <tr><td>Mono</td><td><code>IBM Plex Mono</code></td><td>Labels, prices, eyebrows</td></tr>
+      </table>
+      <p>To swap a font, replace the Google Fonts <code>&lt;link&gt;</code> in the head and update the matching <code>--font-*</code> variable.</p>
+    </section>
+
+    <section id="content">
+      <h2>Editing content</h2>
+      <p>All copy — headlines, feature text, pricing, testimonials, FAQ — is plain text inside the HTML. Search for the text you want to change and replace it directly. No CMS or database is involved.</p>
+      <p>The pricing section, testimonial cards and FAQ items are each self-contained blocks — duplicate a block and edit it to add more of the same.</p>
+    </section>
+
+    <section id="sections">
+      <h2>Sections overview</h2>
+      <ul>
+        <li><strong>Hero</strong> — headline, subheadline, two CTAs, animated sorting illustration</li>
+        <li><strong>Logo strip</strong> — social proof row for client/partner logos</li>
+        <li><strong>How it works</strong> — 3-step numbered process</li>
+        <li><strong>Features</strong> — 4-card grid with icons</li>
+        <li><strong>Pricing</strong> — 3-tier comparison with a featured plan</li>
+        <li><strong>Testimonials</strong> — 3 quote cards</li>
+        <li><strong>FAQ</strong> — accordion, click to expand</li>
+        <li><strong>Final CTA</strong> + <strong>Footer</strong></li>
+      </ul>
+    </section>
+
+    <section id="credits">
+      <h2>Credits</h2>
+      <p>Fonts used are all free for commercial use via Google Fonts: Space Grotesk, Inter, and IBM Plex Mono. No stock photography is used — all illustration is done in pure CSS/SVG.</p>
+    </section>
+
+    <section id="changelog">
+      <h2>Changelog</h2>
+      <div class="card">
+        <strong>v1.0</strong> — Initial release. Home 1 (light) and Home 2 (dark) included.
+      </div>
+    </section>
+
+    <section id="support">
+      <h2>Support</h2>
+      <p>Questions about this template? Reach out through your marketplace inbox and we'll get back to you as soon as we can.</p>
+    </section>
+  </main>
+</div>
+
+</body>
+</html>
